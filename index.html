@@ -1,223 +1,315 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beyond the AI Race | Farrell Gregory</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+    <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Beyond the AI Race | Farrell Gregory</title>
+        <style>
+                    * {
+                                    margin: 0;
+                                    padding: 0;
+                                    box-sizing: border-box;
+                    }
+
+                    html {
+                                    scroll-behavior: smooth;
+                    }
+
+                    body {
+                                    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                                    background-color: #faf9f7;
+                                    color: #1a1a1a;
+                                    line-height: 1.6;
+                                    font-size: 16px;
+                                    -webkit-font-smoothing: antialiased;
+                                    -moz-osx-font-smoothing: grayscale;
+                    }
+
+                    .lang-toggle {
+                                    position: fixed;
+                                    top: 1.5rem;
+                                    right: 1.5rem;
+                                    background: #1a1a1a;
+                                    color: #faf9f7;
+                                    border: none;
+                                    padding: 0.5rem 1rem;
+                                    font-size: 0.85rem;
+                                    cursor: pointer;
+                                    font-family: inherit;
+                                    transition: background 0.2s;
+                                    z-index: 100;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
+                    .lang-toggle:hover {
+                                    background: #333;
+                    }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #faf9f7;
-            color: #1a1a1a;
-            line-height: 1.6;
-            font-size: 16px;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+                    .container {
+                                    max-width: 1100px;
+                                    margin: 0 auto;
+                                    padding: 3rem 3rem 4rem 3rem;
+                    }
 
-        .container {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: 3rem 2rem 6rem 2rem;
-        }
+                    .header {
+                                    margin-bottom: 2.5rem;
+                    }
 
-        h1 {
-            font-size: 1.75rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.02em;
-        }
+                    h1 {
+                                    font-size: 2rem;
+                                    font-weight: 600;
+                                    margin-bottom: 0.5rem;
+                                    letter-spacing: -0.02em;
+                    }
 
-        .subtitle {
-            font-size: 0.9rem;
-            color: #666;
-            margin-bottom: 2rem;
-        }
+                    .subtitle {
+                                    font-size: 1rem;
+                                    color: #666;
+                    }
 
-        .thesis-statement {
-            font-size: 1.05rem;
-            line-height: 1.7;
-            margin-bottom: 2.5rem;
-            text-align: justify;
-        }
+                    .main-content {
+                                    display: grid;
+                                    grid-template-columns: 1fr 1fr;
+                                    gap: 4rem;
+                    }
 
-        h2 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: #333;
-        }
+                    .left-column {
+                                    padding-right: 1rem;
+                    }
 
-        .questions-list {
-            list-style: none;
-            margin-bottom: 2rem;
-        }
+                    .right-column {
+                                    padding-left: 1rem;
+                    }
 
-        .questions-list li {
-            margin-bottom: 0.75rem;
-            padding-left: 1rem;
-            position: relative;
-            font-size: 0.95rem;
-        }
+                    .thesis-statement {
+                                    font-size: 1.05rem;
+                                    line-height: 1.75;
+                                    margin-bottom: 2rem;
+                                    text-align: justify;
+                    }
 
-        .questions-list li::before {
-            content: "—";
-            position: absolute;
-            left: 0;
-            color: #999;
-        }
+                    h2 {
+                                    font-size: 1.1rem;
+                                    font-weight: 600;
+                                    margin-bottom: 1rem;
+                                    color: #333;
+                    }
 
-        .questions-list strong {
-            font-weight: 600;
-        }
+                    h3 {
+                                    font-size: 1rem;
+                                    font-weight: 600;
+                                    margin-top: 1.5rem;
+                                    margin-bottom: 0.75rem;
+                                    color: #444;
+                    }
 
-        .contact-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: #1a1a1a;
-            color: #faf9f7;
-            padding: 0.75rem 2rem;
-            font-size: 0.85rem;
-            z-index: 100;
-        }
+                    .primary-question {
+                                    font-size: 0.95rem;
+                                    line-height: 1.7;
+                                    margin-bottom: 1rem;
+                    }
 
-        .contact-bar-inner {
-            max-width: 720px;
-            margin: 0 auto;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            gap: 0.5rem;
-        }
+                    .secondary-list {
+                                    list-style: none;
+                                    margin: 0;
+                                    padding: 0;
+                    }
 
-        .contact-bar a {
-            color: #faf9f7;
-            text-decoration: none;
-            border-bottom: 1px solid rgba(250, 249, 247, 0.3);
-        }
+                    .secondary-list li {
+                                    margin-bottom: 0.6rem;
+                                    padding-left: 1.25rem;
+                                    position: relative;
+                                    font-size: 0.9rem;
+                                    line-height: 1.6;
+                    }
 
-        .contact-bar a:hover {
-            border-bottom-color: #faf9f7;
-        }
+                    .secondary-list li::before {
+                                    content: "•";
+                                    position: absolute;
+                                    left: 0;
+                                    color: #999;
+                    }
 
-        .status-note {
-            background: #f0eeeb;
-            padding: 1rem 1.25rem;
-            margin-bottom: 2rem;
-            font-size: 0.9rem;
-            border-left: 3px solid #1a1a1a;
-        }
+                    .proposal-link {
+                                    color: #1a1a1a;
+                                    text-decoration: none;
+                                    border-bottom: 1px solid #1a1a1a;
+                    }
 
-        .chinese-section {
-            margin-top: 2.5rem;
-            padding-top: 2rem;
-            border-top: 1px solid #e0dedb;
-        }
+                    .proposal-link:hover {
+                                    background: #1a1a1a;
+                                    color: #faf9f7;
+                    }
 
-        .chinese-section h2 {
-            font-size: 1rem;
-        }
+                    .contact-bar {
+                                    position: fixed;
+                                    bottom: 0;
+                                    left: 0;
+                                    right: 0;
+                                    background: #1a1a1a;
+                                    color: #faf9f7;
+                                    padding: 0.6rem 2rem;
+                                    font-size: 0.85rem;
+                                    z-index: 100;
+                    }
 
-        .chinese-text {
-            font-size: 0.95rem;
-            line-height: 1.8;
-        }
+                    .contact-bar-inner {
+                                    max-width: 1100px;
+                                    margin: 0 auto;
+                                    display: flex;
+                                    justify-content: space-between;
+                                    align-items: center;
+                    }
 
-        .proposal-link {
-            color: #1a1a1a;
-            text-decoration: none;
-            border-bottom: 1px solid #1a1a1a;
-        }
+                    .contact-bar a {
+                                    color: #faf9f7;
+                                    text-decoration: none;
+                                    border-bottom: 1px solid rgba(250, 249, 247, 0.3);
+                    }
 
-        .proposal-link:hover {
-            background: #1a1a1a;
-            color: #faf9f7;
-        }
+                    .contact-bar a:hover {
+                                    border-bottom-color: #faf9f7;
+                    }
 
-        @media (max-width: 600px) {
-            .container {
-                padding: 2rem 1.25rem 5.5rem 1.25rem;
-            }
+                    /* Chinese content - hidden by default */
+                    .cn { display: none; }
+                    .en { display: block; }
 
-            h1 {
-                font-size: 1.5rem;
-            }
+                    body.chinese .cn { display: block; }
+                    body.chinese .en { display: none; }
 
-            .contact-bar {
-                padding: 0.6rem 1rem;
-                font-size: 0.8rem;
-            }
+                    @media (max-width: 800px) {
+                                    .container {
+                                                        padding: 2rem 1.5rem 4rem 1.5rem;
+                                    }
 
-            .contact-bar-inner {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.25rem;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Beyond the AI Race</h1>
-        <p class="subtitle">Understanding Chinese Visions for Artificial Intelligence</p>
+                                    .main-content {
+                                                        grid-template-columns: 1fr;
+                                                        gap: 2rem;
+                                    }
 
-        <p class="thesis-statement">
-            Most Western analysis assumes China is in a technological race for superintelligence. My thesis argues that this paradigm ignores the manifold Chinese perspectives on the future and potential of AI. As part of my thesis, I am researching the various ideas about artificial intelligence development and diffusion in China. You can read my initial findings in my <a href="https://docs.google.com/document/d/1el9O-zVSazLEch0HhIf-QvWUSbZfVHXM4bWgI6NV_N8/edit?usp=sharing" class="proposal-link" target="_blank">thesis proposal</a>.
-        </p>
+                                    .left-column, .right-column {
+                                                        padding: 0;
+                                    }
 
-        <div class="status-note">
-            I am currently working on primary source analysis and am seeking interviews to inform my research on Chinese AI perspectives.
-        </div>
+                                    h1 {
+                                                        font-size: 1.5rem;
+                                    }
 
-        <h2>Research Questions</h2>
-        <p style="margin-bottom: 1rem; font-size: 0.95rem;">
-            <strong>Primary:</strong> What are the various Chinese perspectives on the potential of artificial intelligence development, and how do they inform policy and technological strategy?
-        </p>
+                                    .lang-toggle {
+                                                        top: 1rem;
+                                                        right: 1rem;
+                                                        padding: 0.4rem 0.75rem;
+                                                        font-size: 0.8rem;
+                                    }
 
-        <ul class="questions-list">
-            <li><strong>Discourse Categorization:</strong> What are the major, competing schools of thought among leading Chinese AI researchers and policymakers?</li>
-            <li><strong>Policy Validation:</strong> How does the Chinese AI+ Plan reflect this distinct, practical vision compared to the US focus on a "race to dominance"?</li>
-            <li><strong>Embodied AI Viability:</strong> What are the long-term technical and economic challenges of a "physical-first" EAI strategy for China?</li>
-            <li><strong>Distinctions within Embodied AI:</strong> What are the major disagreements between proponents of embodied AI?</li>
-            <li><strong>Alternatives to Embodied AI:</strong> What are other non-LLM scaling perspectives critical of Embodied AI?</li>
-            <li><strong>AGI Skeptics:</strong> What are the different perspectives within broader AGI skepticism? Has this skepticism grown stronger or weaker?</li>
-            <li><strong>Sector Distinctions:</strong> Are there meaningful distinctions between perspectives of party officials, researchers, and the private sector?</li>
-            <li><strong>Public Opinion:</strong> What are popular Chinese perspectives on AI development, and how have these changed over time?</li>
-        </ul>
+                                    .contact-bar {
+                                                        padding: 0.5rem 1rem;
+                                                        font-size: 0.8rem;
+                                    }
 
-        <div class="chinese-section">
-            <h2>中文摘要</h2>
-            <p class="chinese-text">
-                大多数西方分析认为中国正在进行一场通用人工智能的技术竞赛。我的论文认为，这种范式忽略了中国对人工智能未来和潜力的多元视角。我正在研究中国关于人工智能发展和传播的各种观点，并寻求访谈机会以深入了解中国的人工智能视角。
-            </p>
-            <p class="chinese-text" style="margin-top: 0.75rem;">
-                联系方式：gregoryf@dickinson.edu | 微信：A6780324
-            </p>
-        </div>
-    </div>
+                                    .contact-bar-inner {
+                                                        flex-direction: column;
+                                                        align-items: flex-start;
+                                                        gap: 0.25rem;
+                                    }
+                    }
+                </style>
+    </head>
+    <body>
+            <button class="lang-toggle" onclick="toggleLanguage()">
+                        <span class="en">中文</span>span>
+                        <span class="cn">English</span>span>
+            </button>button>
 
-    <div class="contact-bar">
-        <div class="contact-bar-inner">
-            <span><strong>Farrell Gregory</strong> · Seeking Interviews</span>
-            <span>
-                <a href="mailto:gregoryf@dickinson.edu">gregoryf@dickinson.edu</a> ·
-                <a href="mailto:fgregorychinamail@gmail.com">fgregorychinamail@gmail.com</a> ·
-                WeChat: A6780324
-            </span>
-        </div>
-    </div>
-</body>
-</html>
+            <div class="container">
+                        <div class="header">
+                                        <h1>
+                                                            <span class="en">Beyond the AI Race</span>span>
+                                                            <span class="cn">超越人工智能竞赛</span>span>
+                                        </h1>
+                                        <p class="subtitle">
+                                                            <span class="en">Understanding Chinese Visions for Artificial Intelligence</span>span>
+                                                            <span class="cn">理解中国对人工智能的愿景</span>span>
+                                        </p>p>
+                        </div>div>
+
+                        <div class="main-content">
+                                        <div class="left-column">
+                                                            <p class="thesis-statement en">
+                                                                                    Most Western analysis assumes China is in a technological race for superintelligence. My thesis argues that this paradigm ignores the manifold Chinese perspectives on the future and potential of AI. As part of my thesis, I am researching the various ideas about artificial intelligence development and diffusion in China. You can read my initial findings in my <a href="https://docs.google.com/document/d/1el9O-zVSazLEch0HhIf-QvWUSbZfVHXM4bWgI6NV_N8/edit?usp=sharing" class="proposal-link" target="_blank">thesis proposal</a>a>.
+                                                            </p>p>
+                                                            <p class="thesis-statement cn">
+                                                                                    大多数西方分析认为中国正在进行一场通用人工智能的技术竞赛。我的论文认为，这种范式忽略了中国对人工智能未来和潜力的多元视角。作为论文研究的一部分，我正在研究中国关于人工智能发展和传播的各种观点。您可以在我的<a href="https://docs.google.com/document/d/1el9O-zVSazLEch0HhIf-QvWUSbZfVHXM4bWgI6NV_N8/edit?usp=sharing" class="proposal-link" target="_blank">论文提案</a>a>中阅读我的初步发现。
+                                                            </p>p>
+                                        </div>div>
+
+                                        <div class="right-column">
+                                                            <h2>
+                                                                                    <span class="en">Research Questions</span>span>
+                                                                                    <span class="cn">研究问题</span>span>
+                                                            </h2>
+
+                                                            <h3>
+                                                                                    <span class="en">Primary</span>span>
+                                                                                    <span class="cn">主要问题</span>span>
+                                                            </h3>
+                                                            <p class="primary-question en">
+                                                                                    What are the various Chinese perspectives on the potential of artificial intelligence development, and how do they inform policy and technological strategy?
+                                                            </p>p>
+                                                            <p class="primary-question cn">
+                                                                                    中国对人工智能发展潜力有哪些不同的观点，这些观点如何影响政策和技术战略？
+                                                            </p>p>
+
+                                                            <h3>
+                                                                                    <span class="en">Secondary</span>span>
+                                                                                    <span class="cn">次要问题</span>span>
+                                                            </h3>
+                                                            <ul class="secondary-list en">
+                                                                                    <li>What are the major, competing schools of thought among leading Chinese AI researchers and policymakers?</li>
+                                                                                <li>How does the Chinese AI+ Plan reflect this distinct, practical vision compared to the US focus on a "race to dominance"?</li>
+                                                                                <li>What are the long-term technical and economic challenges of a "physical-first" embodied AI strategy for China?</li>
+                                                                                <li>What are the major disagreements between proponents of embodied AI?</li>
+                                                                                <li>What are other non-LLM scaling perspectives critical of Embodied AI?</li>
+                                                                                <li>What are the different perspectives within broader AGI skepticism?</li>
+                                                                                <li>Are there meaningful distinctions between perspectives of party officials, researchers, and the private sector?</li>
+                                                                                <li>What are popular Chinese perspectives on AI development, and how have these changed over time?</li>
+                                                            </ul>ul>
+                                                        <ul class="secondary-list cn">
+                                                                            <li>中国主要人工智能研究人员和决策者之间有哪些主要的、相互竞争的思想流派？</li>
+                                                                            <li>与美国关注"竞争主导权"相比，中国的AI+计划如何体现这种独特的务实愿景？</li>
+                                                                            <li>中国"物理优先"具身人工智能战略面临哪些长期技术和经济挑战？</li>
+                                                                            <li>具身人工智能支持者之间有哪些主要分歧？</li>
+                                                                            <li>还有哪些非大语言模型扩展的观点对具身人工智能持批评态度？</li>
+                                                                            <li>在更广泛的通用人工智能怀疑论中有哪些不同观点？</li>
+                                                                            <li>党政官员、研究人员和私营部门的观点之间是否存在有意义的区别？</li>
+                                                                            <li>中国公众对人工智能发展有哪些看法，这些看法随时间如何变化？</li>
+                                                        </ul>ul>
+                                        </div>div>
+                        </div>div>
+            </div>div>
+    
+        <div class="contact-bar">
+                <div class="contact-bar-inner">
+                            <span><strong>Farrell Gregory</strong></span>
+                            <span>
+                                            <a href="mailto:gregoryf@dickinson.edu">gregoryf@dickinson.edu</a>a> · 
+                                            <a href="mailto:fgregorychinamail@gmail.com">fgregorychinamail@gmail.com</a>a> · 
+                                            <span class="en">WeChat: A6780324</span>
+                                            <span class="cn">微信：A6780324</span>
+                            </span>
+                </div>div>
+        </div>div>
+    
+        <script>
+                    function toggleLanguage() {
+                                    document.body.classList.toggle('chinese');
+                    }
+        </script>
+    </body>
+</html>html>
+        </script></strong></span></li></li>
+                                                            </h2>
+                                        </h1>
+    </body>
+        </style></title>
+    </head>
