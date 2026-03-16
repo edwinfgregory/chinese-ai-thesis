@@ -613,26 +613,24 @@ img.onload = function() {
 
     var idata = tx.getImageData(0, 0, CSS_W, CSS_H).data;
 
-    // Single-pixel luminance
-    function lum(x, y) {
-        x = Math.max(0, Math.min(CSS_W - 1, Math.round(x)));
-        y = Math.max(0, Math.min(CSS_H - 1, Math.round(y)));
-        var i = (y * CSS_W + x) * 4;
-        return (idata[i] + idata[i+1] + idata[i+2]) / 3;
+    // Min-pool over STEP-sized cell: catches halftone dots even between grid points
+    function cellHasDark(cx, cy) {
+        var half = Math.floor(STEP / 2);
+        for (var dy = -half; dy <= half; dy++) {
+            for (var dx = -half; dx <= half; dx++) {
+                var px = Math.max(0, Math.min(CSS_W - 1, cx + dx));
+                var py = Math.max(0, Math.min(CSS_H - 1, cy + dy));
+                var i  = (py * CSS_W + px) * 4;
+                if ((idata[i] + idata[i+1] + idata[i+2]) / 3 < 140) return true;
+            }
+        }
+        return false;
     }
 
-    // 3x3 neighbourhood average (offsets ±3px) to smooth block artifacts
-    function lumAvg(cx, cy) {
-        return (lum(cx-3,cy-3)+lum(cx,cy-3)+lum(cx+3,cy-3)+
-                lum(cx-3,cy  )+lum(cx,cy  )+lum(cx+3,cy  )+
-                lum(cx-3,cy+3)+lum(cx,cy+3)+lum(cx+3,cy+3)) / 9;
-    }
-
-    // White background (255), China is dark grey (<140)
     var dots = [];
     for (var x = STEP/2; x < CSS_W; x += STEP)
         for (var y = STEP/2; y < CSS_H; y += STEP)
-            if (lumAvg(x, y) < 160) dots.push([x, y]);
+            if (cellHasDark(x, y)) dots.push([x, y]);
 
     // Fisher-Yates shuffle for random fill animation
     for (var i = dots.length - 1; i > 0; i--) {
