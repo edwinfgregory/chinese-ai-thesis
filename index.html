@@ -94,15 +94,6 @@
 
     .l-text { padding: 8vh 0; }
 
-    .l-eyebrow {
-        display: block;
-        font-size: .5875rem; font-weight: 600;
-        letter-spacing: .2em; text-transform: uppercase;
-        color: var(--red);
-        margin-bottom: 2rem;
-        opacity: 0; transition: opacity .6s ease;
-    }
-
     .l-title {
         font-size: clamp(1.875rem, 2.6vw, 2.875rem);
         font-weight: 300;
@@ -113,11 +104,11 @@
     }
 
     .l-name {
-        margin-top: 2.75rem;
-        font-size: .75rem; font-weight: 500;
-        color: rgba(237,232,221,.42);
-        letter-spacing: .1em;
-        text-transform: uppercase;
+        margin-top: 2.25rem;
+        font-size: 1rem;
+        font-weight: 400;
+        color: rgba(237,232,221,.78);
+        letter-spacing: .04em;
         opacity: 0; transition: opacity .7s ease .15s;
     }
 
@@ -130,37 +121,38 @@
     #map-cvs { display: block; opacity: 0; transition: opacity .5s ease; }
 
     @keyframes mapPulse {
-        0%,100% { opacity: .75; filter: drop-shadow(0 0 5px rgba(200,28,28,.25)); }
-        50%      { opacity: 1;   filter: drop-shadow(0 0 20px rgba(200,28,28,.62)); }
+        0%,100% { opacity: .78; filter: drop-shadow(0 0 6px rgba(200,28,28,.28)); }
+        50%      { opacity: 1;   filter: drop-shadow(0 0 22px rgba(200,28,28,.65)); }
     }
     #map-cvs.pulse { animation: mapPulse 3.5s ease-in-out infinite; }
 
     /* ── THESIS ── */
-    #thesis { background: var(--cream); padding: 8rem 0 7rem; }
+    #thesis { background: var(--cream); padding: 6rem 0 5.5rem; }
 
     .wrap { max-width: 1080px; margin: 0 auto; padding: 0 4.5rem; }
 
     .section-label {
         display: block;
         font-size: .5875rem; font-weight: 600; letter-spacing: .18em;
-        text-transform: uppercase; color: var(--red); margin-bottom: 3rem;
+        text-transform: uppercase; color: var(--red); margin-bottom: 2.5rem;
     }
     .section-label-muted { color: var(--gray); }
+    .section-label-sm { margin-bottom: 1rem; }
 
     .thesis-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 6rem;
+        gap: 4rem;
         align-items: start;
     }
 
     .t-lede {
-        font-size: 1.25rem; font-weight: 400;
-        line-height: 1.48; letter-spacing: -.012em;
+        font-size: 1.2rem; font-weight: 400;
+        line-height: 1.5; letter-spacing: -.012em;
         color: var(--char); margin-bottom: 1.25rem;
     }
     .t-body {
-        font-size: .9375rem; line-height: 1.88;
+        font-size: .9375rem; line-height: 1.82;
         color: #3d3a33; margin-bottom: .6rem;
     }
     .t-rule { width: 20px; height: 2px; background: var(--red); margin: 2rem 0; }
@@ -168,18 +160,25 @@
         font-size: 1rem; line-height: 1.72;
         color: var(--char); font-weight: 400;
     }
+    .t-primary-q {
+        font-size: 1.05rem; line-height: 1.62;
+        color: var(--char); font-weight: 400;
+        padding-bottom: 1.75rem;
+        margin-bottom: 2rem;
+        border-bottom: 1px solid var(--cream-drk);
+    }
     .doc-lnk {
-        display: inline-block; margin-top: 1.5rem;
+        display: inline-block;
         font-size: .8rem; color: var(--red); text-decoration: none;
         border-bottom: 1px solid rgba(194,32,32,.25); padding-bottom: 1px;
         transition: border-color .2s, opacity .2s;
     }
     .doc-lnk:hover { border-color: var(--red); opacity: .75; }
 
-    .q-list { list-style: none; margin-top: .5rem; }
+    .q-list { list-style: none; }
     .q-list li {
-        font-size: .9rem; line-height: 1.62;
-        padding: .9rem 0 .9rem 1.1rem;
+        font-size: .875rem; line-height: 1.58;
+        padding: .8rem 0 .8rem 1rem;
         border-left: 1.5px solid var(--cream-drk);
         color: #4a4840;
         border-bottom: 1px solid rgba(0,0,0,.04);
@@ -189,11 +188,20 @@
     .q-list li:last-child { border-bottom: none; }
 
     /* ── FRAMEWORK ── */
-    #framework { background: var(--cream-mid); padding: 8rem 0 7rem; }
+    #framework { background: var(--cream-mid); padding: 6rem 0 5.5rem; }
+
+    .fw-heading {
+        font-size: clamp(1.75rem, 3vw, 2.5rem);
+        font-weight: 300;
+        letter-spacing: -.025em;
+        color: var(--char);
+        line-height: 1.15;
+        margin-bottom: 3rem;
+    }
 
     .fw-diagram {
         display: flex; flex-direction: column; align-items: center;
-        margin-top: 3.5rem;
+        margin-top: 0;
     }
 
     .ax {
@@ -203,7 +211,7 @@
     .ax.top { margin-bottom: 1rem; }
     .ax.bot { margin-top: 1rem; }
 
-    .b-diag { position: relative; width: 400px; height: 270px; }
+    .b-diag { position: relative; width: 500px; height: 340px; }
 
     .bubble {
         position: absolute; border-radius: 50%;
@@ -212,33 +220,33 @@
         cursor: pointer;
         display: flex; align-items: center; justify-content: center;
         transition:
-            transform .48s cubic-bezier(.34,1.25,.64,1),
-            background .28s, opacity .32s, box-shadow .28s;
+            transform .42s cubic-bezier(.34,1.28,.64,1),
+            background .24s, opacity .28s, box-shadow .24s;
         user-select: none;
     }
     .bubble:not(.dimmed):not(.active):hover {
-        background: rgba(194,32,32,.64);
-        transform: scale(1.05);
-        box-shadow: 0 4px 24px rgba(194,32,32,.2);
+        background: rgba(194,32,32,.72);
+        transform: scale(1.12);
+        box-shadow: 0 8px 40px rgba(194,32,32,.42);
     }
     .bubble span {
-        font-size: .78rem; font-weight: 500; color: #f4f0e8;
+        font-size: .8rem; font-weight: 500; color: #f4f0e8;
         text-align: center; line-height: 1.35; padding: 0 .65rem;
         pointer-events: none;
     }
 
-    .b-sk { width: 164px; height: 164px; left: 118px; top: 0; }
-    .b-ll { width: 158px; height: 158px; left: 18px;  top: 104px; }
-    .b-em { width: 158px; height: 158px; right: 18px; top: 104px; }
+    .b-sk { width: 205px; height: 205px; left: 148px; top: 0; }
+    .b-ll { width: 197px; height: 197px; left: 22px;  top: 130px; }
+    .b-em { width: 197px; height: 197px; right: 22px; top: 130px; }
 
     .bubble.active {
-        background: rgba(194,32,32,.86);
+        background: rgba(194,32,32,.88);
         border-color: rgba(194,32,32,.5);
-        box-shadow: 0 6px 30px rgba(194,32,32,.28);
+        box-shadow: 0 6px 36px rgba(194,32,32,.32);
         z-index: 10;
     }
-    .bubble.active:hover { transform: scale(1.03); }
-    .bubble.dimmed { opacity: .2; }
+    .bubble.active:hover { transform: scale(1.04); }
+    .bubble.dimmed { opacity: .18; }
     .bubble.dimmed.b-ll { transform: scale(.84) translate(-12px,10px); }
     .bubble.dimmed.b-em { transform: scale(.84) translate(12px,10px); }
     .bubble.dimmed.b-sk { transform: scale(.84) translateY(-12px); }
@@ -265,7 +273,7 @@
     .bp-x:hover { color: var(--char); }
 
     /* ── INDIVIDUALS ── */
-    #individuals { background: var(--cream); padding: 8rem 0 7rem; }
+    #individuals { background: var(--cream); padding: 6rem 0 5.5rem; }
 
     .ind-intro {
         font-size: .9375rem; line-height: 1.82; color: #3d3a33;
@@ -273,21 +281,21 @@
     }
 
     .ind-list {
-        column-count: 2; column-gap: 5rem;
+        column-count: 3; column-gap: 3rem;
         list-style: none;
-        margin-top: 3.5rem;
+        margin-top: 3rem;
         border-top: 1px solid var(--cream-drk);
-        padding-top: 2rem;
+        padding-top: 1.75rem;
     }
     .ind-item {
         break-inside: avoid;
-        padding: .72rem 0;
-        border-bottom: 1px solid rgba(0,0,0,.042);
+        padding: .58rem 0;
+        border-bottom: 1px solid rgba(0,0,0,.038);
         transition: padding-left .18s;
     }
-    .ind-item:hover { padding-left: .4rem; }
-    .ind-name { font-size: .9rem; font-weight: 500; color: var(--char); line-height: 1.3; }
-    .ind-aff  { font-size: .73rem; color: var(--gray); margin-top: .18rem; line-height: 1.4; }
+    .ind-item:hover { padding-left: .35rem; }
+    .ind-name { font-size: .875rem; font-weight: 500; color: var(--char); line-height: 1.3; }
+    .ind-aff  { font-size: .7rem; color: var(--gray); margin-top: .14rem; line-height: 1.35; }
 
     /* ── CONTACT ── */
     #contact {
@@ -331,26 +339,27 @@
         .l-title { font-size: clamp(1.5rem, 4.5vw, 2.25rem); }
     }
     @media (max-width: 820px) {
-        .thesis-grid { grid-template-columns: 1fr; gap: 4rem; }
+        .thesis-grid { grid-template-columns: 1fr; gap: 3.5rem; }
         .wrap { padding: 0 2rem; }
-        #thesis, #framework, #individuals { padding: 5.5rem 0 5rem; }
+        #thesis, #framework, #individuals { padding: 5rem 0 4.5rem; }
         .c-wrap { padding: 5.5rem 2rem; }
         #nav { padding: 0 1.75rem; }
         .nav-links { gap: 1.5rem; }
-        .b-diag { width: 320px; height: 218px; }
-        .b-sk { width: 130px; height: 130px; left: 95px; top: 0; }
-        .b-ll { width: 126px; height: 126px; left: 14px; top: 83px; }
-        .b-em { width: 126px; height: 126px; right: 14px; top: 83px; }
-        .ind-list { column-count: 1; }
+        .b-diag { width: 360px; height: 246px; }
+        .b-sk { width: 148px; height: 148px; left: 107px; top: 0; }
+        .b-ll { width: 142px; height: 142px; left: 16px; top: 94px; }
+        .b-em { width: 142px; height: 142px; right: 16px; top: 94px; }
+        .ind-list { column-count: 2; }
     }
     @media (max-width: 520px) {
         #landing { padding: 6vh 1.5rem 5vh; }
-        .b-diag { width: 272px; height: 186px; }
-        .b-sk { width: 112px; height: 112px; left: 80px; top: 0; }
-        .b-ll { width: 108px; height: 108px; left: 10px; top: 72px; }
-        .b-em { width: 108px; height: 108px; right: 10px; top: 72px; }
+        .b-diag { width: 290px; height: 198px; }
+        .b-sk { width: 120px; height: 120px; left: 86px; top: 0; }
+        .b-ll { width: 114px; height: 114px; left: 12px; top: 76px; }
+        .b-em { width: 114px; height: 114px; right: 12px; top: 76px; }
         .nav-links { gap: 1rem; }
         .c-wrap { padding: 5rem 1.5rem; }
+        .ind-list { column-count: 1; }
     }
     </style>
 </head>
@@ -378,8 +387,6 @@
 <!-- ══ 1 — LANDING ══ -->
 <section id="landing">
     <div class="l-text">
-        <span class="l-eyebrow en" id="l-eye">Dickinson College · Thesis Research</span>
-        <span class="l-eyebrow cn" id="l-eye-cn">迪金森学院 · 论文研究</span>
         <h1 class="l-title" id="l-title">
             <span class="en">Chinese perspectives on development, diffusion, and potential of artificial intelligence</span>
             <span class="cn">中国对人工智能发展、扩散与潜力的认知</span>
@@ -403,10 +410,6 @@
                 <p class="t-body en">Given the rising cost of maintaining frontier capabilities, it increasingly seems that only two countries will be capable of competing in global artificial intelligence: China and America. The continual American fault of assuming that the Chinese have the same beliefs as us, a tendency known as mirroring, leads many technologists and policymakers to believe that the Chinese tend to hold similar assumptions around policy, trade-offs, and development. Given the stakes, it is all the more important to understand Chinese discourse around artificial intelligence.</p>
                 <p class="t-body cn">随着前沿能力维护成本的持续上升，越来越多的迹象表明，只有两个国家能够在全球人工智能领域一较高下：中国与美国。美国长期存在一种将自身思维方式投射到中国身上的倾向，即"镜像化"谬误，这使许多技术专家和政策制定者误以为中国在政策取向、权衡考量和发展路径上与美国类似。正因如此，理解中国围绕人工智能的话语体系显得尤为重要。</p>
                 <div class="t-rule"></div>
-                <span class="section-label en" style="margin-bottom:1rem">Primary Research Question</span>
-                <span class="section-label cn" style="margin-bottom:1rem">主要研究问题</span>
-                <p class="t-q en">What are the mainstream Chinese perspectives on the development and diffusion of artificial intelligence?</p>
-                <p class="t-q cn">中国对人工智能发展与扩散的主流观点是什么？</p>
                 <a href="https://docs.google.com/document/d/1el9O-zVSazLEch0HhIf-QvWUSbZfVHXM4bWgI6NV_N8/edit?usp=sharing"
                    class="doc-lnk" target="_blank">
                     <span class="en">Read the thesis proposal →</span>
@@ -414,8 +417,12 @@
                 </a>
             </div>
             <div>
-                <span class="section-label section-label-muted en">Secondary Questions</span>
-                <span class="section-label section-label-muted cn">次要问题</span>
+                <span class="section-label section-label-sm en">Primary Research Question</span>
+                <span class="section-label section-label-sm cn">主要研究问题</span>
+                <p class="t-primary-q en">What are the mainstream Chinese perspectives on the development and diffusion of artificial intelligence?</p>
+                <p class="t-primary-q cn">中国对人工智能发展与扩散的主流观点是什么？</p>
+                <span class="section-label section-label-muted section-label-sm en">Secondary Questions</span>
+                <span class="section-label section-label-muted section-label-sm cn">次要问题</span>
                 <ul class="q-list">
                     <li><span class="en">Major groupings</span><span class="cn">主要派别</span></li>
                     <li><span class="en">What are disagreements within groupings</span><span class="cn">各派别内部有哪些分歧</span></li>
@@ -431,8 +438,10 @@
 <!-- ══ 3 — FRAMEWORK ══ -->
 <section id="framework">
     <div class="wrap">
-        <span class="section-label en">Three Mainstream Perspectives</span>
-        <span class="section-label cn">三种主流视角</span>
+        <span class="section-label en">Framework</span>
+        <span class="section-label cn">分析框架</span>
+        <h2 class="fw-heading en">Three Mainstream Perspectives</h2>
+        <h2 class="fw-heading cn">三种主流视角</h2>
         <div class="fw-diagram">
             <span class="ax top en">↑ AGI-infeasible</span>
             <span class="ax top cn">↑ AGI不可行</span>
@@ -633,12 +642,12 @@ function onScr() {
 }
 window.addEventListener('scroll', onScr, { passive: true });
 
-// ── China dot map (polygon-based, no image) ────────
+// ── China dot map (chinamap.webp pixel sampling) ──
 const DPR  = window.devicePixelRatio || 1;
 const RED  = '#cc1c1c';
 const GLOW = 'rgba(200,28,28,.52)';
 const R    = 2.5;
-const STEP = 9;
+const STEP = 10;
 
 const IS_WIDE = window.innerWidth > 960;
 const CSS_W   = IS_WIDE
@@ -654,75 +663,6 @@ cvs.height = CSS_H * DPR;
 const ctx = cvs.getContext('2d');
 ctx.scale(DPR, DPR);
 
-// China mainland boundary (lon, lat), clockwise from NW Xinjiang
-const BORDER = [
-    [73.6,39.5],[73.8,41.3],[76.0,43.5],[80.2,44.1],
-    [83.0,48.0],[87.4,49.2],[91.0,50.0],[96.0,49.9],
-    [100.3,50.4],[106.5,50.3],[111.0,49.4],[115.5,47.8],
-    [117.8,47.9],[119.0,47.9],[120.7,48.6],[122.0,48.2],
-    [124.0,48.1],[128.0,48.5],[131.0,47.7],[133.0,47.2],
-    // Far NE tip (Heilongjiang)
-    [134.6,48.4],
-    // Down Russian border to Korea
-    [133.0,46.5],[131.5,43.5],[130.5,42.5],[129.5,42.4],
-    // N Korea border → Liaodong Peninsula
-    [128.3,41.5],[124.5,40.0],[122.6,40.5],[121.3,38.9],
-    // Shandong Peninsula & SE coast
-    [122.5,37.3],[122.5,36.7],[120.7,35.0],
-    [119.7,34.5],[119.7,32.7],[121.8,31.5],
-    // SE coast → South
-    [121.2,28.0],[119.8,26.2],[117.2,23.6],
-    [114.2,22.2],[113.5,21.8],[110.4,20.2],
-    [108.5,21.5],[107.0,21.8],[106.5,22.4],
-    // Vietnam/Laos/Myanmar border
-    [104.7,22.7],[102.8,22.5],[100.2,22.4],[98.2,24.1],
-    // Myanmar → India/Nepal/Tibet
-    [97.5,27.8],[96.5,28.1],[93.0,27.5],[88.8,28.0],
-    [85.2,28.3],[82.0,30.0],[80.2,30.5],[79.0,32.5],
-    // Pakistan/Karakoram → Tajikistan → back to NW
-    [77.0,35.5],[75.4,37.4],[74.6,38.0]
-];
-
-const LON0 = 72, LON1 = 136.5;
-const LAT0 = 17.5, LAT1 = 54.5;
-
-function project(lon, lat) {
-    return [
-        (lon - LON0) / (LON1 - LON0) * CSS_W,
-        (1 - (lat - LAT0) / (LAT1 - LAT0)) * CSS_H
-    ];
-}
-
-// Build Path2D from border
-const chinaPath = new Path2D();
-(function() {
-    const [sx, sy] = project(BORDER[0][0], BORDER[0][1]);
-    chinaPath.moveTo(sx, sy);
-    for (let i = 1; i < BORDER.length; i++) {
-        const [x, y] = project(BORDER[i][0], BORDER[i][1]);
-        chinaPath.lineTo(x, y);
-    }
-    chinaPath.closePath();
-})();
-
-// Use a scratch context (no DPR transform) for hit testing
-const scratch = document.createElement('canvas').getContext('2d');
-scratch.canvas.width  = CSS_W + 2;
-scratch.canvas.height = CSS_H + 2;
-
-// Collect dots inside China
-const dots = [];
-for (let x = STEP / 2; x < CSS_W; x += STEP)
-    for (let y = STEP / 2; y < CSS_H; y += STEP)
-        if (scratch.isPointInPath(chinaPath, x, y))
-            dots.push([x, y]);
-
-// Shuffle
-for (let i = dots.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [dots[i], dots[j]] = [dots[j], dots[i]];
-}
-
 function drawDot(x, y) {
     ctx.shadowColor = GLOW;
     ctx.shadowBlur  = 5;
@@ -733,23 +673,98 @@ function drawDot(x, y) {
     ctx.fill();
 }
 
-// Fill animation
-cvs.style.opacity = '1';
-let idx = 0;
-(function fill() {
-    for (let k = 0; k < 12 && idx < dots.length; k++, idx++)
-        drawDot(dots[idx][0], dots[idx][1]);
-    if (idx < dots.length) {
-        setTimeout(fill, 16);
-    } else {
-        // Done — pulse map and reveal landing text
-        cvs.classList.add('pulse');
-        ['l-eye', 'l-eye-cn', 'l-title', 'l-name'].forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.style.opacity = '1';
-        });
+function revealText() {
+    ['l-title', 'l-name'].forEach(function(id) {
+        const el = document.getElementById(id);
+        if (el) el.style.opacity = '1';
+    });
+}
+
+const img = new Image();
+img.src = 'chinamap.webp';
+
+img.onload = function() {
+    const tmp = document.createElement('canvas');
+    tmp.width  = CSS_W;
+    tmp.height = CSS_H;
+    const tx = tmp.getContext('2d');
+    tx.drawImage(img, 0, 0, CSS_W, CSS_H);
+
+    var data;
+    try {
+        data = tx.getImageData(0, 0, CSS_W, CSS_H).data;
+    } catch(e) {
+        // CORS / tainted canvas — just show text
+        cvs.style.opacity = '0';
+        revealText();
+        return;
     }
-})();
+
+    // Average luminance and alpha over a neighborhood to smooth compression artifacts
+    function pixelAvg(cx, cy) {
+        var lumSum = 0, alphaSum = 0, n = 0;
+        for (var dy = -4; dy <= 4; dy += 2) {
+            for (var dx = -4; dx <= 4; dx += 2) {
+                var px = Math.max(0, Math.min(CSS_W - 1, Math.round(cx + dx)));
+                var py = Math.max(0, Math.min(CSS_H - 1, Math.round(cy + dy)));
+                var i  = (py * CSS_W + px) * 4;
+                lumSum   += (data[i] + data[i+1] + data[i+2]) / 3;
+                alphaSum += data[i+3];
+                n++;
+            }
+        }
+        return { lum: lumSum / n, alpha: alphaSum / n };
+    }
+
+    // Determine image type by sampling corners
+    var corners = [
+        pixelAvg(6, 6),
+        pixelAvg(CSS_W - 7, 6),
+        pixelAvg(6, CSS_H - 7),
+        pixelAvg(CSS_W - 7, CSS_H - 7)
+    ];
+    var avgCornerLum   = (corners[0].lum   + corners[1].lum   + corners[2].lum   + corners[3].lum)   / 4;
+    var avgCornerAlpha = (corners[0].alpha + corners[1].alpha + corners[2].alpha + corners[3].alpha) / 4;
+
+    var hasTransparency = avgCornerAlpha < 200;
+    var darkBackground  = !hasTransparency && avgCornerLum < 100;
+
+    function isChina(cx, cy) {
+        var p = pixelAvg(cx, cy);
+        if (hasTransparency) return p.alpha > 80;
+        if (darkBackground)  return p.lum > 100;
+        return p.lum < 155;
+    }
+
+    var dots = [];
+    for (var x = STEP / 2; x < CSS_W; x += STEP)
+        for (var y = STEP / 2; y < CSS_H; y += STEP)
+            if (isChina(x, y)) dots.push([x, y]);
+
+    // Fisher-Yates shuffle
+    for (var i = dots.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var tmp2 = dots[i]; dots[i] = dots[j]; dots[j] = tmp2;
+    }
+
+    cvs.style.opacity = '1';
+    var idx = 0;
+    (function fill() {
+        for (var k = 0; k < 14 && idx < dots.length; k++, idx++)
+            drawDot(dots[idx][0], dots[idx][1]);
+        if (idx < dots.length) {
+            setTimeout(fill, 16);
+        } else {
+            cvs.classList.add('pulse');
+            revealText();
+        }
+    })();
+};
+
+img.onerror = function() {
+    cvs.style.opacity = '0';
+    revealText();
+};
 
 // ── Bubble data ───────────────────────────────────
 const BD = {
@@ -779,7 +794,7 @@ function bClick(el) {
     const k  = el.dataset.key;
     if (openB === el) { bClose(); return; }
     openB = el;
-    document.querySelectorAll('.bubble').forEach(b => {
+    document.querySelectorAll('.bubble').forEach(function(b) {
         b.classList.remove('active', 'dimmed');
         if (b !== el) b.classList.add('dimmed');
     });
@@ -793,7 +808,9 @@ function bClick(el) {
 
 function bClose() {
     openB = null;
-    document.querySelectorAll('.bubble').forEach(b => b.classList.remove('active', 'dimmed'));
+    document.querySelectorAll('.bubble').forEach(function(b) {
+        b.classList.remove('active', 'dimmed');
+    });
     bp.classList.remove('open');
 }
 </script>
