@@ -575,7 +575,7 @@ var IS_WIDE = window.innerWidth > 960;
 var CSS_W   = IS_WIDE
     ? Math.min(660, Math.round(window.innerWidth * 0.5) - 40)
     : Math.min(500, window.innerWidth - 48);
-var CSS_H = Math.round(CSS_W * 0.62);
+var CSS_H = Math.round(CSS_W * 719 / 800); // match chinamap.webp native aspect ratio
 
 cvs.style.width  = CSS_W + 'px';
 cvs.style.height = CSS_H + 'px';
@@ -628,29 +628,11 @@ img.onload = function() {
                 lum(cx-3,cy+3)+lum(cx,cy+3)+lum(cx+3,cy+3)) / 9;
     }
 
-    // Determine background brightness from corners
-    var bgLum = (lum(4,4) + lum(CSS_W-5,4) + lum(4,CSS_H-5) + lum(CSS_W-5,CSS_H-5)) / 4;
-    // Dark bg → China is bright; light bg → China is dark
-    var darkBg = bgLum < 128;
-
+    // White background (255), China is dark grey (<140)
     var dots = [];
     for (var x = STEP/2; x < CSS_W; x += STEP)
-        for (var y = STEP/2; y < CSS_H; y += STEP) {
-            var l = lumAvg(x, y);
-            var isChina = darkBg ? (l > bgLum * 0.6 + 30) : (l < bgLum * 0.85);
-            if (isChina) dots.push([x, y]);
-        }
-
-    // Sanity check — if too few or too many dots, try inverted threshold
-    if (dots.length < 80 || dots.length > (CSS_W / STEP) * (CSS_H / STEP) * 0.7) {
-        dots = [];
-        for (var x = STEP/2; x < CSS_W; x += STEP)
-            for (var y = STEP/2; y < CSS_H; y += STEP) {
-                var l = lumAvg(x, y);
-                var isChina = darkBg ? (l < bgLum * 0.85) : (l > bgLum * 0.6 + 30);
-                if (isChina) dots.push([x, y]);
-            }
-    }
+        for (var y = STEP/2; y < CSS_H; y += STEP)
+            if (lumAvg(x, y) < 160) dots.push([x, y]);
 
     // Fisher-Yates shuffle for random fill animation
     for (var i = dots.length - 1; i > 0; i--) {
