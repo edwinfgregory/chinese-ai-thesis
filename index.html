@@ -11,14 +11,14 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-        --cream:      #ede8dd;
-        --cream-mid:  #e5dfd3;
-        --cream-drk:  #d3cdc0;
-        --terra:      #b35a48;
-        --terra-hi:   #c97060;
-        --char:       #1c1a17;
-        --gray:       #87806e;
-        --offwhite:   #f4f0e8;
+        --cream:     #ede8dd;
+        --cream-mid: #e5dfd3;
+        --cream-drk: #d3cdc0;
+        --terra:     #c22020;
+        --terra-hi:  #d43030;
+        --char:      #1c1a17;
+        --gray:      #87806e;
+        --offwhite:  #f4f0e8;
     }
 
     html { scroll-behavior: smooth; }
@@ -43,15 +43,12 @@
     .reveal { opacity:0; transform:translateY(16px); transition:opacity .7s ease,transform .7s ease; }
     .reveal.on { opacity:1; transform:none; }
 
-    /* ── TRAIL CANVAS — fixed right column ── */
+    /* ── TRAIL CANVAS — full-viewport fixed overlay ── */
     #trail-cvs {
         position: fixed;
-        right: 20px;
-        top: 0;
+        top: 0; left: 0;
         pointer-events: none;
         z-index: 50;
-        opacity: 0;
-        transition: opacity .5s ease;
     }
 
     /* ── NAV ── */
@@ -66,7 +63,6 @@
         transition: transform .42s cubic-bezier(.4,0,.2,1);
     }
     #nav.on { transform: translateY(0); }
-
     #nav a.brand {
         color: var(--cream); font-size: .875rem; font-weight: 500;
         text-decoration: none; opacity: .8;
@@ -92,14 +88,14 @@
     }
     .lbtn:hover { color:var(--cream); border-color:rgba(237,232,221,.5); }
 
-    /* Floating btn on landing */
+    /* Floating lang btn on landing */
     #lbtn-float {
         position:fixed; top:.95rem; right:2.25rem; z-index:900;
         transition: opacity .3s;
     }
     #lbtn-float.hide { opacity:0; pointer-events:none; }
 
-    /* ── SECTION 1 — LANDING ── */
+    /* ── LANDING ── */
     #landing {
         min-height: 100vh;
         background: var(--char);
@@ -109,6 +105,12 @@
     }
 
     #map-cvs { display:block; opacity:0; transition: opacity .6s ease; }
+
+    @keyframes mapPulse {
+        0%,100% { opacity:.72; filter: drop-shadow(0 0 4px rgba(200,28,28,.22)); }
+        50%      { opacity:1;   filter: drop-shadow(0 0 18px rgba(200,28,28,.6)); }
+    }
+    #map-cvs.pulse { animation: mapPulse 3.5s ease-in-out infinite; }
 
     .landing-line {
         margin-top: 2.5rem;
@@ -122,9 +124,6 @@
         opacity: 0;
         transition: opacity .7s ease;
     }
-
-    @keyframes mapPulse { 0%,100%{opacity:.8} 50%{opacity:1} }
-    #map-cvs.pulse { animation: mapPulse 3s ease-in-out infinite; }
 
     .scroll-hint {
         position: absolute; bottom:1.75rem; left:50%;
@@ -140,7 +139,7 @@
     }
     @keyframes shf { 0%,100%{transform:translateY(0);opacity:.28} 50%{transform:translateY(6px);opacity:.6} }
 
-    /* ── SECTION 2 — THESIS ── */
+    /* ── THESIS ── */
     #thesis { background:var(--cream); padding:7rem 0 6rem; }
 
     .wrap { max-width:1040px; margin:0 auto; padding:0 3rem; }
@@ -166,7 +165,7 @@
     .doc-lnk {
         display:inline-block; margin-top:1.5rem;
         font-size:.8125rem; color:var(--terra); text-decoration:none;
-        border-bottom:1px solid rgba(179,90,72,.28); padding-bottom:1px;
+        border-bottom:1px solid rgba(194,32,32,.28); padding-bottom:1px;
         transition:border-color .2s, opacity .2s;
     }
     .doc-lnk:hover { border-color:var(--terra); opacity:.75; }
@@ -183,7 +182,7 @@
     .q-list li:hover { border-left-color:var(--terra); color:var(--char); }
     .q-list li:last-child { border-bottom:none; }
 
-    /* ── SECTION 3 — FRAMEWORK ── */
+    /* ── FRAMEWORK ── */
     #framework { background:var(--cream-mid); padding:7rem 0 6rem; }
 
     .fw-stage { display:flex; flex-direction:column; align-items:center; }
@@ -195,13 +194,12 @@
     .ax.top { margin-bottom:.9rem; }
     .ax.bot { margin-top:.9rem; }
 
-    /* Bubble diagram */
     .b-diag { position:relative; width:400px; height:270px; }
 
     .bubble {
         position:absolute; border-radius:50%;
-        background: rgba(179,90,72,.52);
-        border: 1.5px solid rgba(179,90,72,.25);
+        background: rgba(194,32,32,.46);
+        border: 1.5px solid rgba(194,32,32,.22);
         cursor:pointer;
         display:flex; align-items:center; justify-content:center;
         transition:
@@ -210,9 +208,9 @@
         user-select:none;
     }
     .bubble:not(.dimmed):not(.active):hover {
-        background:rgba(179,90,72,.7);
+        background:rgba(194,32,32,.68);
         transform:scale(1.06);
-        box-shadow:0 4px 20px rgba(179,90,72,.2);
+        box-shadow:0 4px 20px rgba(194,32,32,.22);
     }
     .bubble span {
         font-size:.75rem; font-weight:500; color:#f4f0e8;
@@ -220,15 +218,14 @@
         pointer-events:none;
     }
 
-    /* Skeptics top-center; LLM lower-left; Embodied lower-right — overlapping */
-    .b-sk { width:164px; height:164px; left:118px; top:0;    } /* ctr: 200, 82  */
-    .b-ll { width:158px; height:158px; left:18px;  top:104px; } /* ctr: 97,  183 */
-    .b-em { width:158px; height:158px; right:18px; top:104px; } /* ctr: 303, 183 */
+    .b-sk { width:164px; height:164px; left:118px; top:0;    }
+    .b-ll { width:158px; height:158px; left:18px;  top:104px; }
+    .b-em { width:158px; height:158px; right:18px; top:104px; }
 
     .bubble.active {
-        background:rgba(179,90,72,.9);
-        border-color:rgba(179,90,72,.6);
-        box-shadow:0 6px 28px rgba(179,90,72,.3);
+        background:rgba(194,32,32,.88);
+        border-color:rgba(194,32,32,.55);
+        box-shadow:0 6px 28px rgba(194,32,32,.3);
         z-index:10;
     }
     .bubble.active:hover { transform:scale(1.04); }
@@ -260,7 +257,7 @@
     }
     .bp-x:hover { color:var(--char); }
 
-    /* ── SECTION 4 — CONTACT ── */
+    /* ── CONTACT ── */
     #contact { background:var(--char); color:var(--cream); min-height:100vh; display:flex; align-items:center; }
     .c-wrap { max-width:620px; margin:0 auto; padding:7rem 3rem; }
     .c-wrap .lbl { color:var(--terra-hi); }
@@ -284,7 +281,6 @@
         .b-sk { width:130px; height:130px; left:95px; top:0; }
         .b-ll { width:126px; height:126px; left:14px; top:83px; }
         .b-em { width:126px; height:126px; right:14px; top:83px; }
-        #trail-cvs { right:10px; }
     }
     @media (max-width:520px) {
         .b-diag { width:272px; height:186px; }
@@ -441,22 +437,71 @@
 </section>
 
 <script>
-// ── Lang ────────────────────────────────────────────
+// ── Lang ──────────────────────────────────────────
 let openB = null;
 function toggleLang() {
     document.body.classList.toggle('zh');
     if (openB) {
-        const k = openB.dataset.key;
+        const k  = openB.dataset.key;
         const zh = document.body.classList.contains('zh');
         document.getElementById('bp-b').innerHTML = BD[k][zh ? 'cn' : 'en'];
     }
 }
 
-// ── Nav / float button ──────────────────────────────
+// ── Shared constants ──────────────────────────────
+const DPR  = window.devicePixelRatio || 1;
+const RED  = '#cc1c1c';
+const GLOW = 'rgba(200,28,28,.52)';
+const R    = 2.6;
+const STEP = 9;
+
+// ── Trail canvas state ────────────────────────────
+const tc       = document.getElementById('trail-cvs');
+let   tCtx     = null;
+let   trailPath = [];      // {px, py} page-coordinate dots, reveal order
+let   maxRevY   = -Infinity; // highest page-Y frontier reached
+
+function initTC() {
+    const vw = window.innerWidth, vh = window.innerHeight;
+    tc.width  = vw * DPR;
+    tc.height = vh * DPR;
+    tc.style.width  = vw + 'px';
+    tc.style.height = vh + 'px';
+    tCtx = tc.getContext('2d');
+}
+
+function drawTrail() {
+    if (!tCtx) return;
+    const scrollY = window.scrollY;
+    const vw = window.innerWidth, vh = window.innerHeight;
+
+    // Advance frontier on scroll
+    const frontier = scrollY + vh;
+    if (frontier > maxRevY) maxRevY = frontier;
+
+    tCtx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    tCtx.clearRect(0, 0, vw, vh);
+    tCtx.shadowColor = GLOW;
+    tCtx.shadowBlur  = 6;
+    tCtx.fillStyle   = RED;
+    tCtx.globalAlpha = 0.58;
+
+    for (const d of trailPath) {
+        if (d.py > maxRevY) break;
+        const cy = d.py - scrollY;
+        if (cy < -8 || cy > vh + 8) continue;
+        tCtx.beginPath();
+        tCtx.arc(d.px, cy, 2.2, 0, Math.PI * 2);
+        tCtx.fill();
+    }
+}
+
+// ── Nav / scroll ──────────────────────────────────
 const nav = document.getElementById('nav');
 const lf  = document.getElementById('lbtn-float');
 const sh  = document.getElementById('scroll-hint');
 const ll  = document.getElementById('landing-line');
+const cvs = document.getElementById('map-cvs');
 
 function onScr() {
     const y    = window.scrollY;
@@ -464,143 +509,151 @@ function onScr() {
     const past = y > lH * .72;
     nav.classList.toggle('on', past);
     lf.classList.toggle('hide', past);
-    if (past) document.getElementById('map-cvs').classList.remove('pulse');
+    if (past) cvs.classList.remove('pulse');
+    drawTrail();
 }
-window.addEventListener('scroll', onScr, { passive:true });
+window.addEventListener('scroll', onScr, { passive: true });
 
-// ── Scroll reveal ───────────────────────────────────
+// ── Scroll reveal ─────────────────────────────────
 const rObs = new IntersectionObserver(es => {
     es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); rObs.unobserve(e.target); }});
-}, { threshold:.1 });
+}, { threshold: .1 });
 document.querySelectorAll('.reveal').forEach(el => rObs.observe(el));
 
-// ── China dot map ───────────────────────────────────
-(function() {
-    const DPR   = window.devicePixelRatio || 1;
-    const CSS_W = 480, CSS_H = 340;
-    const cvs   = document.getElementById('map-cvs');
-    cvs.style.width  = CSS_W + 'px';
-    cvs.style.height = CSS_H + 'px';
-    cvs.width  = CSS_W * DPR;
-    cvs.height = CSS_H * DPR;
-    const ctx   = cvs.getContext('2d');
-    ctx.scale(DPR, DPR);
+// ── China dot map ─────────────────────────────────
+const CSS_W = 480, CSS_H = 340;
+cvs.style.width  = CSS_W + 'px';
+cvs.style.height = CSS_H + 'px';
+cvs.width  = CSS_W * DPR;
+cvs.height = CSS_H * DPR;
+const ctx = cvs.getContext('2d');
+ctx.scale(DPR, DPR);
 
-    const TERRA = '#b35a48';
-    const R = 2.6, STEP = 9;
+function mapDot(x, y) {
+    ctx.shadowColor = GLOW;
+    ctx.shadowBlur  = 5;
+    ctx.beginPath();
+    ctx.arc(x, y, R, 0, Math.PI * 2);
+    ctx.fillStyle   = RED;
+    ctx.globalAlpha = 0.9;
+    ctx.fill();
+}
 
-    function dot(cx, c, x, y, a) {
-        cx.beginPath();
-        cx.arc(x, y, R, 0, Math.PI*2);
-        cx.fillStyle = c;
-        cx.globalAlpha = a;
-        cx.fill();
+const img = new Image();
+img.src = 'chinamap.webp';
+img.onload = function () {
+    // Sample map pixels
+    const tmp = document.createElement('canvas');
+    tmp.width = CSS_W; tmp.height = CSS_H;
+    const tx = tmp.getContext('2d');
+    tx.drawImage(img, 0, 0, CSS_W, CSS_H);
+    const px = tx.getImageData(0, 0, CSS_W, CSS_H).data;
+
+    function lum(x, y) {
+        x = Math.max(0, Math.min(CSS_W-1, Math.round(x)));
+        y = Math.max(0, Math.min(CSS_H-1, Math.round(y)));
+        const i = (y * CSS_W + x) * 4;
+        return (px[i] + px[i+1] + px[i+2]) / 3;
     }
 
-    const img = new Image();
-    img.src = 'chinamap.webp';
-
-    img.onload = function() {
-        // Sample chinamap pixel data to locate dots
-        const tmp = document.createElement('canvas');
-        tmp.width = CSS_W; tmp.height = CSS_H;
-        const tx  = tmp.getContext('2d');
-        tx.drawImage(img, 0, 0, CSS_W, CSS_H);
-        const px = tx.getImageData(0, 0, CSS_W, CSS_H).data;
-
-        function lum(x, y) {
-            x = Math.max(0, Math.min(CSS_W-1, Math.round(x)));
-            y = Math.max(0, Math.min(CSS_H-1, Math.round(y)));
-            const i = (y * CSS_W + x) * 4;
-            return (px[i] + px[i+1] + px[i+2]) / 3;
+    const dots = [];
+    for (let x = STEP/2; x < CSS_W; x += STEP)
+        for (let y = STEP/2; y < CSS_H; y += STEP) {
+            const mn = Math.min(lum(x,y),lum(x-3,y),lum(x+3,y),lum(x,y-3),lum(x,y+3));
+            if (mn < 155) dots.push([x, y]);
         }
 
-        // Sample grid, check cross of pixels for robustness
-        const dots = [];
-        for (let x = STEP/2; x < CSS_W; x += STEP) {
-            for (let y = STEP/2; y < CSS_H; y += STEP) {
-                const mn = Math.min(
-                    lum(x, y), lum(x-3, y), lum(x+3, y),
-                    lum(x, y-3), lum(x, y+3)
-                );
-                if (mn < 155) dots.push([x, y]);
-            }
-        }
-
-        // Shuffle
-        for (let i = dots.length-1; i > 0; i--) {
-            const j = Math.floor(Math.random()*(i+1));
-            [dots[i], dots[j]] = [dots[j], dots[i]];
-        }
-
-        // Rightmost dot in vertical middle band → trail start
-        const mid = dots.filter(([,y]) => y > CSS_H*.3 && y < CSS_H*.7);
-        const rm  = mid.reduce((m,d) => d[0]>m[0] ? d : m, [0, CSS_H/2]);
-
-        // Phase 1: fill map
-        cvs.style.opacity = '1';
-        let idx = 0;
-        function fillMap() {
-            for (let k = 0; k < 9 && idx < dots.length; k++, idx++)
-                dot(ctx, TERRA, dots[idx][0], dots[idx][1], 0.72);
-            if (idx < dots.length) setTimeout(fillMap, 16);
-            else setTimeout(() => shootTrail(rm[0], rm[1]), 80);
-        }
-
-        // Phase 2: shoot horizontal trail right from east coast
-        function shootTrail(sx, sy) {
-            const hPts = [];
-            for (let x = sx + STEP; x <= CSS_W - R; x += STEP) hPts.push(x);
-            let ti = 0;
-            function nextH() {
-                if (ti < hPts.length) {
-                    dot(ctx, TERRA, hPts[ti++], sy, 0.72);
-                    setTimeout(nextH, 16);
-                } else {
-                    // Phase 3: pulse + vertical bar + show text
-                    cvs.classList.add('pulse');
-                    ll.style.opacity = '1';
-                    setTimeout(() => { sh.style.opacity = '1'; }, 600);
-                    buildBar();
-                }
-            }
-            nextH();
-        }
-    };
-
-    // Phase 4: build fixed right-side dot column
-    function buildBar() {
-        const DPR2 = window.devicePixelRatio || 1;
-        const tc   = document.getElementById('trail-cvs');
-        const VH   = window.innerHeight;
-        const PW   = 8;
-        tc.style.width  = PW + 'px';
-        tc.style.height = VH + 'px';
-        tc.width  = PW * DPR2;
-        tc.height = VH * DPR2;
-        const tCtx = tc.getContext('2d');
-        tCtx.scale(DPR2, DPR2);
-
-        const tDots = [];
-        for (let y = STEP/2; y < VH; y += STEP) tDots.push(y);
-
-        let ti = 0;
-        tc.style.opacity = '1';
-        function nextT() {
-            if (ti < tDots.length) {
-                tCtx.beginPath();
-                tCtx.arc(PW/2, tDots[ti++], 2.0, 0, Math.PI*2);
-                tCtx.fillStyle = '#b35a48';
-                tCtx.globalAlpha = 0.3;
-                tCtx.fill();
-                setTimeout(nextT, 8);
-            }
-        }
-        nextT();
+    // Shuffle
+    for (let i = dots.length-1; i > 0; i--) {
+        const j = Math.floor(Math.random()*(i+1));
+        [dots[i],dots[j]] = [dots[j],dots[i]];
     }
-})();
 
-// ── Bubble data ─────────────────────────────────────
+    // Rightmost dot in middle vertical band (east coast)
+    const mid = dots.filter(([,y]) => y > CSS_H*.35 && y < CSS_H*.65);
+    const rm  = mid.length
+        ? mid.reduce((a,b) => b[0]>a[0] ? b : a, mid[0])
+        : [CSS_W - STEP, CSS_H/2];
+
+    // Fill map
+    cvs.style.opacity = '1';
+    let idx = 0;
+    (function fillMap() {
+        for (let k = 0; k < 9 && idx < dots.length; k++, idx++)
+            mapDot(dots[idx][0], dots[idx][1]);
+        if (idx < dots.length) setTimeout(fillMap, 16);
+        else setTimeout(function () {
+            const r   = cvs.getBoundingClientRect();
+            shootHorizontal(r.left + rm[0], r.top + rm[1]);
+        }, 100);
+    })();
+};
+
+// Shoot horizontal trail, then build scroll-driven path
+function shootHorizontal(vpX, vpY) {
+    initTC();
+    const pageY     = vpY + window.scrollY;
+    maxRevY         = pageY + 1; // reveal horizontal dots
+    const rightEdge = window.innerWidth - 22;
+    const pts = [];
+    for (let x = vpX + STEP; x <= rightEdge; x += STEP) pts.push(x);
+
+    let hi = 0;
+    (function nextH() {
+        if (hi < pts.length) {
+            trailPath.push({ px: pts[hi++], py: pageY });
+            drawTrail();
+            setTimeout(nextH, 18);
+        } else {
+            // Horizontal done: pulse map, show text, build scroll path
+            cvs.classList.add('pulse');
+            ll.style.opacity = '1';
+            setTimeout(function () { sh.style.opacity = '1'; }, 600);
+            buildScrollPath(pageY);
+            drawTrail();
+        }
+    })();
+}
+
+// Pre-compute all scroll-driven trail dots (page coordinates)
+function buildScrollPath(startY) {
+    const landing   = document.getElementById('landing');
+    const thesis    = document.getElementById('thesis');
+    const framework = document.getElementById('framework');
+    const contact   = document.getElementById('contact');
+
+    const tBot = thesis.offsetTop    + thesis.offsetHeight;
+    const fBot = framework.offsetTop + framework.offsetHeight;
+    const rX   = window.innerWidth - 22;
+    const lX   = 22;
+
+    // Right rail: startY → end of thesis
+    for (let y = startY + STEP; y <= tBot; y += STEP)
+        trailPath.push({ px: rX, py: y });
+
+    // Sweep right → left at thesis/framework seam (staggered = animated sweep on scroll)
+    const cy1 = tBot + 20;
+    let   ci  = 0;
+    for (let x = rX; x >= lX; x -= STEP, ci++)
+        trailPath.push({ px: x, py: cy1 + ci * 0.4 });
+
+    // Left rail: through framework
+    for (let y = cy1 + STEP; y <= fBot; y += STEP)
+        trailPath.push({ px: lX, py: y });
+
+    // Sweep left → right at framework/contact seam
+    const cy2 = fBot + 20;
+    ci = 0;
+    for (let x = lX; x <= rX; x += STEP, ci++)
+        trailPath.push({ px: x, py: cy2 + ci * 0.4 });
+
+    // Right rail: into contact, terminates ~55% through
+    const termY = fBot + contact.offsetHeight * 0.55;
+    for (let y = cy2 + STEP; y <= termY; y += STEP)
+        trailPath.push({ px: rX, py: y });
+}
+
+// ── Bubble data ───────────────────────────────────
 const BD = {
     sk: {
         title: 'AGI Skeptics',
