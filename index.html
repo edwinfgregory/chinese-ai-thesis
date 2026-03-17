@@ -222,9 +222,8 @@
         user-select: none;
     }
     .bubble:not(.dimmed):not(.active):hover {
-        background: rgba(194,32,32,.72);
-        transform: scale(1.12);
-        box-shadow: 0 8px 40px rgba(194,32,32,.42);
+        background: rgba(194,32,32,.75);
+        box-shadow: 0 10px 44px rgba(194,32,32,.5);
     }
     .bubble span {
         font-size: .8rem; font-weight: 500; color: #f4f0e8;
@@ -358,6 +357,69 @@
         .c-wrap { padding: 5rem 1.5rem; }
         .ind-list { column-count: 1; }
     }
+
+    /* Gradient transition from landing to thesis */
+    #thesis { position: relative; }
+    #thesis::before {
+        content: '';
+        position: absolute; top: -140px; left: 0; right: 0;
+        height: 140px;
+        background: linear-gradient(to bottom, transparent, var(--cream));
+        pointer-events: none;
+        z-index: 10;
+    }
+
+    /* More visible float translation button */
+    #lbtn-float {
+        background: var(--red);
+        color: var(--offwhite);
+        border-color: rgba(194,32,32,.5);
+        padding: .38rem 1.1rem;
+        font-size: .6875rem;
+        letter-spacing: .1em;
+        font-weight: 600;
+        box-shadow: 0 2px 18px rgba(0,0,0,.45);
+        transition: opacity .3s, background .2s, box-shadow .2s;
+    }
+    #lbtn-float:hover {
+        background: var(--red-hi);
+        color: #fff;
+        border-color: var(--red-hi);
+        box-shadow: 0 4px 22px rgba(194,32,32,.4);
+    }
+
+    /* Tighter spacing */
+    #thesis     { padding: 4rem 0 3rem; }
+    #framework  { padding: 4rem 0 3rem; }
+    #individuals{ padding: 4rem 0 3rem; }
+    .section-label { margin-bottom: 1.5rem; }
+    .fw-heading { margin-bottom: 2rem; }
+    .thesis-grid { gap: 2.5rem; }
+    .t-lede { margin-bottom: .6rem; }
+    .t-primary-q { padding-bottom: 1rem; margin-bottom: 1.25rem; }
+    .q-list li { padding: .5rem 0 .5rem 1rem; }
+    .ind-intro { margin-top: .75rem; }
+    .ind-list { margin-top: 1.75rem; padding-top: 1.25rem; }
+
+    /* Bubble diagram SVG connectors */
+    .b-diag-svg {
+        position: absolute; top: 0; left: 0;
+        width: 100%; height: 100%;
+        pointer-events: none; overflow: visible;
+    }
+    @keyframes connFlow { to { stroke-dashoffset: -18; } }
+    .b-conn {
+        stroke: rgba(194,32,32,.22);
+        stroke-width: 1.5;
+        fill: none;
+        stroke-dasharray: 5 4;
+        animation: connFlow 1.4s linear infinite;
+    }
+    /* During physics: disable transform transition so bubbles track instantly */
+    .b-diag.physics-on .bubble {
+        transition: background .24s, opacity .28s, box-shadow .24s !important;
+    }
+
     </style>
 </head>
 <body>
@@ -426,11 +488,11 @@
                 <span class="section-label section-label-muted section-label-sm en">Secondary Questions</span>
                 <span class="section-label section-label-muted section-label-sm cn">次要问题</span>
                 <ul class="q-list">
-                    <li><span class="en">Major groupings</span><span class="cn">主要派别</span></li>
-                    <li><span class="en">What are disagreements within groupings</span><span class="cn">各派别内部有哪些分歧</span></li>
-                    <li><span class="en">Does profession (lab, commercial firm, industrial, academia, government) associate with expressed views</span><span class="cn">职业背景（实验室、商业公司、工业界、学术界、政府）是否与所持观点相关</span></li>
-                    <li><span class="en">Relative proportionality and political salience</span><span class="cn">相对比例关系与政治显著性</span></li>
-                    <li><span class="en">Non-categorical perspectives</span><span class="cn">非分类视角</span></li>
+                    <li><span class="en">Do these perspectives fit into coherent categories that offer insight into Chinese AI discourse?</span><span class="cn">这些观点是否能归纳为连贯的类别，从而深化对中国人工智能话语的理解？</span></li>
+                    <li><span class="en">What are the disagreements over AI development within individual categories?</span><span class="cn">各类别内部在人工智能发展问题上存在哪些分歧？</span></li>
+                    <li><span class="en">Do professions tend to correlate with certain expressed views?</span><span class="cn">职业背景是否倾向于与特定观点相关联？</span></li>
+                    <li><span class="en">What is the relative proportionality among these views?</span><span class="cn">这些观点的相对比例如何？</span></li>
+                    <li><span class="en">Do some influential views on AI development and diffusion not fit into this categorical framework?</span><span class="cn">是否有一些有影响力的人工智能发展与扩散观点不适合纳入这一分类框架？</span></li>
                 </ul>
             </div>
         </div>
@@ -448,6 +510,11 @@
             <span class="ax top en">↑ AGI-infeasible</span>
             <span class="ax top cn">↑ AGI不可行</span>
             <div class="b-diag">
+                <svg class="b-diag-svg" id="b-svg" xmlns="http://www.w3.org/2000/svg">
+                    <line class="b-conn" id="bc-sk-ll" x1="250.5" y1="102.5" x2="120.5" y2="228.5"/>
+                    <line class="b-conn" id="bc-sk-em" x1="250.5" y1="102.5" x2="379.5" y2="228.5"/>
+                    <line class="b-conn" id="bc-ll-em" x1="120.5" y1="228.5" x2="379.5" y2="228.5"/>
+                </svg>
                 <div class="bubble b-sk" data-key="sk" onclick="bClick(this)">
                     <span><span class="en">New Electricity</span><span class="cn">新通用技术</span></span>
                 </div>
@@ -613,7 +680,6 @@ img.onload = function() {
 
     var idata = tx.getImageData(0, 0, CSS_W, CSS_H).data;
 
-    // Min-pool over STEP-sized cell: catches halftone dots even between grid points
     function cellHasDark(cx, cy) {
         var half = Math.floor(STEP / 2);
         for (var dy = -half; dy <= half; dy++) {
@@ -632,24 +698,66 @@ img.onload = function() {
         for (var y = STEP/2; y < CSS_H; y += STEP)
             if (cellHasDark(x, y)) dots.push([x, y]);
 
-    // Fisher-Yates shuffle for random fill animation
-    for (var i = dots.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var t = dots[i]; dots[i] = dots[j]; dots[j] = t;
+    // Sort radially outward from approximate center of China on the map
+    var cX = CSS_W * 0.55, cY = CSS_H * 0.40;
+    dots.sort(function(a, b) {
+        var da = (a[0]-cX)*(a[0]-cX) + (a[1]-cY)*(a[1]-cY);
+        var db = (b[0]-cX)*(b[0]-cX) + (b[1]-cY)*(b[1]-cY);
+        return da - db;
+    });
+
+    var drawn = [];
+    var BLOOM = 60;   // trailing glow ring dot count
+    var BATCH = 10;   // dots per frame
+
+    function frame() {
+        ctx.clearRect(0, 0, CSS_W, CSS_H);
+
+        var bloomStart = Math.max(0, drawn.length - BLOOM);
+
+        // Draw settled dots in one fast batched path
+        ctx.beginPath();
+        for (var i = 0; i < bloomStart; i++) {
+            ctx.moveTo(drawn[i][0] + R, drawn[i][1]);
+            ctx.arc(drawn[i][0], drawn[i][1], R, 0, Math.PI * 2);
+        }
+        ctx.fillStyle = RED;
+        ctx.globalAlpha = 0.88;
+        ctx.fill();
+
+        // Draw bloom ring: newest dots glow outward like an expanding wave front
+        for (var i = bloomStart; i < drawn.length; i++) {
+            var t = (i - bloomStart) / BLOOM;  // 0 = oldest in bloom, 1 = newest
+            var glowR = R * (1 + (1 - t) * 4.5);
+            ctx.beginPath();
+            ctx.arc(drawn[i][0], drawn[i][1], glowR, 0, Math.PI * 2);
+            ctx.fillStyle = RED;
+            ctx.globalAlpha = (1 - t) * 0.22;
+            ctx.fill();
+            // solid core
+            ctx.beginPath();
+            ctx.arc(drawn[i][0], drawn[i][1], R, 0, Math.PI * 2);
+            ctx.fillStyle = RED;
+            ctx.globalAlpha = 0.88;
+            ctx.fill();
+        }
+        ctx.globalAlpha = 1;
     }
 
     cvs.style.opacity = '1';
     var idx = 0;
-    (function fill() {
-        for (var k = 0; k < 14 && idx < dots.length; k++, idx++)
-            drawDot(dots[idx][0], dots[idx][1]);
+    function fill() {
+        for (var k = 0; k < BATCH && idx < dots.length; k++, idx++) {
+            drawn.push(dots[idx]);
+        }
+        frame();
         if (idx < dots.length) {
-            setTimeout(fill, 16);
+            requestAnimationFrame(fill);
         } else {
             revealText();
         }
-    })();
-};
+    }
+    requestAnimationFrame(fill);
 
 // Bubble data
 var BD = {
@@ -675,6 +783,11 @@ var bpT = document.getElementById('bp-t');
 var bpB = document.getElementById('bp-b');
 
 function bClick(el) {
+    // Clear any physics offsets before applying active state
+    if (typeof bPhys !== 'undefined') {
+        bPhys.forEach(function(b) { b.ox = 0; b.oy = 0; b.el.style.transform = ''; });
+        document.querySelector('.b-diag').classList.remove('physics-on');
+    }
     var zh = document.body.classList.contains('zh');
     var k  = el.dataset.key;
     if (openB === el) { bClose(); return; }
@@ -698,6 +811,90 @@ function bClose() {
     });
     bp.classList.remove('open');
 }
+
+// Bubble proximity physics
+(function() {
+    var bDiag = document.querySelector('.b-diag');
+    if (!bDiag) return;
+
+    // Home centers in 500×340 diagram coordinate space (matches CSS positions)
+    // b-sk: left:148 top:0   size:205 → center (250.5, 102.5)
+    // b-ll: left:22  top:130 size:197 → center (120.5, 228.5)
+    // b-em: right:22 top:130 size:197 → center (379.5, 228.5)
+    window.bPhys = [
+        { el: document.querySelector('.b-sk'), hx: 250.5, hy: 102.5, ox: 0, oy: 0 },
+        { el: document.querySelector('.b-ll'), hx: 120.5, hy: 228.5, ox: 0, oy: 0 },
+        { el: document.querySelector('.b-em'), hx: 379.5, hy: 228.5, ox: 0, oy: 0 }
+    ];
+
+    var bcSkLl = document.getElementById('bc-sk-ll');
+    var bcSkEm = document.getElementById('bc-sk-em');
+    var bcLlEm = document.getElementById('bc-ll-em');
+
+    function setLine(line, b1, b2) {
+        if (!line) return;
+        line.setAttribute('x1', (b1.hx + b1.ox).toFixed(1));
+        line.setAttribute('y1', (b1.hy + b1.oy).toFixed(1));
+        line.setAttribute('x2', (b2.hx + b2.ox).toFixed(1));
+        line.setAttribute('y2', (b2.hy + b2.oy).toFixed(1));
+    }
+
+    function setConnectors() {
+        setLine(bcSkLl, bPhys[0], bPhys[1]);
+        setLine(bcSkEm, bPhys[0], bPhys[2]);
+        setLine(bcLlEm, bPhys[1], bPhys[2]);
+    }
+
+    var mX = 0, mY = 0, physRaf = false;
+    var REPEL_R   = 148;   // repulsion radius in diagram px
+    var REPEL_MAX = 46;    // max displacement px
+
+    function applyRepulsion() {
+        physRaf = false;
+        if (window.openB) return; // don't move during active panel
+        bPhys.forEach(function(b) {
+            var dx = b.hx - mX, dy = b.hy - mY;
+            var d  = Math.sqrt(dx * dx + dy * dy) || 1;
+            if (d < REPEL_R) {
+                var t = 1 - d / REPEL_R;
+                var f = t * t * REPEL_MAX; // quadratic falloff
+                b.ox = (dx / d) * f;
+                b.oy = (dy / d) * f;
+            } else {
+                b.ox = 0; b.oy = 0;
+            }
+            b.el.style.transform = (b.ox || b.oy)
+                ? 'translate(' + b.ox.toFixed(1) + 'px,' + b.oy.toFixed(1) + 'px)'
+                : '';
+        });
+        setConnectors();
+    }
+
+    bDiag.addEventListener('mousemove', function(e) {
+        if (window.openB) return;
+        var r = bDiag.getBoundingClientRect();
+        mX = (e.clientX - r.left) / r.width  * 500;
+        mY = (e.clientY - r.top)  / r.height * 340;
+        if (!bDiag.classList.contains('physics-on')) {
+            bDiag.classList.add('physics-on');
+        }
+        if (!physRaf) {
+            physRaf = true;
+            requestAnimationFrame(applyRepulsion);
+        }
+    });
+
+    bDiag.addEventListener('mouseleave', function() {
+        if (window.openB) return;
+        bDiag.classList.remove('physics-on');
+        // CSS transition now springs bubbles back with bouncy easing
+        bPhys.forEach(function(b) {
+            b.ox = 0; b.oy = 0;
+            b.el.style.transform = '';
+        });
+        setConnectors();
+    });
+})();
 </script>
 </body>
 </html>
