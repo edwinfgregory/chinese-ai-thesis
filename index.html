@@ -652,6 +652,9 @@ cvs.height = CSS_H * DPR;
 var ctx = cvs.getContext('2d');
 ctx.scale(DPR, DPR);
 
+// Outer-scope dot array + mouse state for interactive rendering
+var drawn = [], mapMX = -999, mapMY = -999, mapHover = false, mapRafActive = false;
+
 function drawDot(x, y) {
     ctx.beginPath();
     ctx.arc(x, y, R, 0, Math.PI * 2);
@@ -665,6 +668,67 @@ function revealText() {
         var el = document.getElementById(id);
         if (el) el.style.opacity = '1';
     });
+    cvs.style.cursor = 'crosshair';
+    cvs.addEventListener('mousemove', function(e) {
+        var r = cvs.getBoundingClientRect();
+        mapMX = (e.clientX - r.left) / r.width  * CSS_W;
+        mapMY = (e.clientY - r.top)  / r.height * CSS_H;
+        mapHover = true;
+        if (!mapRafActive) { mapRafActive = true; requestAnimationFrame(mapInteractiveFrame); }
+    });
+    cvs.addEventListener('mouseleave', function() { mapHover = false; });
+}
+
+function mapStaticFrame() {
+    ctx.clearRect(0, 0, CSS_W, CSS_H);
+    ctx.beginPath();
+    for (var i = 0; i < drawn.length; i++) {
+        ctx.moveTo(drawn[i][0] + R, drawn[i][1]);
+        ctx.arc(drawn[i][0], drawn[i][1], R, 0, Math.PI * 2);
+    }
+    ctx.fillStyle = RED; ctx.globalAlpha = 0.88; ctx.fill();
+    ctx.globalAlpha = 1;
+}
+
+function mapInteractiveFrame() {
+    if (!mapHover) { mapRafActive = false; mapStaticFrame(); return; }
+    ctx.clearRect(0, 0, CSS_W, CSS_H);
+    var GLOW_R   = CSS_W * 0.22;   // spotlight radius
+    var PUSH_R   = CSS_W * 0.048;  // parting radius
+    var PUSH_MAX = R * 2.4;        // max parting displacement
+    var glowDots = [];
+    // Batch-draw all dots outside the spotlight in one path (fast)
+    ctx.beginPath();
+    for (var i = 0; i < drawn.length; i++) {
+        var ox = drawn[i][0], oy = drawn[i][1];
+        var dx = ox - mapMX, dy = oy - mapMY;
+        var d  = Math.sqrt(dx * dx + dy * dy) || 1;
+        if (d >= GLOW_R) {
+            ctx.moveTo(ox + R, oy);
+            ctx.arc(ox, oy, R, 0, Math.PI * 2);
+        } else {
+            var t2 = Math.pow(1 - d / GLOW_R, 2);
+            var vx = ox, vy = oy;
+            if (d < PUSH_R) {
+                var f = (1 - d / PUSH_R) * PUSH_MAX;
+                vx += (dx / d) * f; vy += (dy / d) * f;
+            }
+            glowDots.push({ vx: vx, vy: vy, t2: t2 });
+        }
+    }
+    ctx.fillStyle = RED; ctx.globalAlpha = 0.88; ctx.fill();
+    // Individually draw glow dots with halo + brightened core
+    for (var j = 0; j < glowDots.length; j++) {
+        var g = glowDots[j];
+        ctx.beginPath();
+        ctx.arc(g.vx, g.vy, R * (1 + g.t2 * 3.2), 0, Math.PI * 2);
+        ctx.fillStyle = RED; ctx.globalAlpha = g.t2 * 0.3; ctx.fill();
+        ctx.beginPath();
+        ctx.arc(g.vx, g.vy, R * (1 + g.t2 * 0.5), 0, Math.PI * 2);
+        ctx.fillStyle = RED; ctx.globalAlpha = 0.88 + g.t2 * 0.12; ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(mapInteractiveFrame);
 }
 
 var img = new Image();
@@ -706,7 +770,7 @@ img.onload = function() {
         return da - db;
     });
 
-    var drawn = [];
+    drawn = [];  // use outer-scope array for interactive renderer
     var BLOOM = 60;   // trailing glow ring dot count
     var BATCH = 10;   // dots per frame
 
