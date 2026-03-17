@@ -358,13 +358,13 @@
         .ind-list { column-count: 1; }
     }
 
-    /* Gradient transition from landing to thesis */
+    /* Gradient transition from landing to thesis — light drifting up */
     #thesis { position: relative; }
     #thesis::before {
         content: '';
-        position: absolute; top: -140px; left: 0; right: 0;
-        height: 140px;
-        background: linear-gradient(to bottom, transparent, var(--cream));
+        position: absolute; top: -200px; left: 0; right: 0;
+        height: 200px;
+        background: linear-gradient(to top, rgba(237,232,221,.72) 0%, rgba(237,232,221,.18) 55%, transparent 100%);
         pointer-events: none;
         z-index: 10;
     }
@@ -758,6 +758,7 @@ img.onload = function() {
         }
     }
     requestAnimationFrame(fill);
+};
 
 // Bubble data
 var BD = {
